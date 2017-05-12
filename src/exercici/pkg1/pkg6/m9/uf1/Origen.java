@@ -63,6 +63,7 @@ public class Origen {
         
         Cipher cifrador = Cipher.getInstance("RSA/ECB/PKCS1Padding", "SunJCE");
         cifrador.init(Cipher.ENCRYPT_MODE, pub);
+        missatgeEncriptat = cifrador.doFinal(data);
         
     }
     
