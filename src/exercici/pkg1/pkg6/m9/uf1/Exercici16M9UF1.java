@@ -14,11 +14,17 @@ public class Exercici16M9UF1 {
     public static void main(String[] args) throws Exception {
         Origen o = new Origen();
         
+        
         //Fem que origen obtingui el magatzem de claus.
         o.CarregarMagatzemClaus("C:\\Users\\ALUMNEDAM\\Documents\\Exercici-1.6-M9-UF1\\src\\SSL\\origen.jks", "1423586709");
         
+        //Recuperem el magatzem de claus.
+        KeyStore almacen = o.getMagatzem();
         
-        
+        Enumeration<String> aliases = almacen.aliases();
+        while (aliases.hasMoreElements()) {
+            System.out.println(aliases.nextElement());
+        }
         
 //        KeyStore almacen = o.loadKeyStore("C:\\Users\\ALUMNEDAM\\Documents\\Exercici-1.6-M9-UF1\\src\\SSL\\origen.jks", "1423586709");
 //        Enumeration<String> aliases = almacen.aliases();
