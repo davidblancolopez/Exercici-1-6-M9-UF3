@@ -14,9 +14,9 @@ public class Desti {
     private byte[] buffer;
     
     
-    public void desxifraDadesReceptor(byte[] data) throws NoSuchProviderException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException{
-        Cipher descifrador = Cipher.getInstance("RSA/ECB/PKCS1Padding", "SunJCE");
-        descifrador.init(Cipher.DECRYPT_MODE, keyPair.getPrivate());
-        buffer = descifrador.doFinal(data);
-    }
+//    public void desxifraDadesReceptor(byte[] data) throws NoSuchProviderException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException{
+//        Cipher descifrador = Cipher.getInstance("RSA/ECB/PKCS1Padding", "SunJCE");
+//        descifrador.init(Cipher.DECRYPT_MODE, keyPair.getPrivate());
+//        buffer = descifrador.doFinal(data);
+//    }
 }

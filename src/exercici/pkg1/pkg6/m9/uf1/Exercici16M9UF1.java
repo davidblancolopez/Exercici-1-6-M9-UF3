@@ -9,10 +9,14 @@ import java.security.cert.X509Certificate;
 import java.util.Enumeration;
 
 public class Exercici16M9UF1 {
-    public String text = "";
+    public String text = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa";
     
     public static void main(String[] args) throws Exception {
         Origen o = new Origen();
+        
+        //Fem que origen obtingui el magatzem de claus.
+        o.CarregarMagatzemClaus("C:\\Users\\ALUMNEDAM\\Documents\\Exercici-1.6-M9-UF1\\src\\SSL\\origen.jks", "1423586709");
+        
         
         
         

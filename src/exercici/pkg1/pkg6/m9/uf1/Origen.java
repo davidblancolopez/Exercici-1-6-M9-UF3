@@ -25,6 +25,15 @@ public class Origen {
     public Origen() {
     }
 
+    public KeyStore getMagatzem() {
+        return magatzem;
+    }
+
+    public void setMagatzem(KeyStore magatzem) {
+        this.magatzem = magatzem;
+    }
+
+    
     /**
      * Metode que retorna el magatzem de claus. Li arriba un string on s'indica
      * la ruta del arxiu .jks que es el magatzem, la contrasenya del magatzem de
@@ -71,14 +80,14 @@ public class Origen {
     /**
      * Metode per a firmar.
      * @param data
-     * @param priv
+     * @param clauPrivada
      * @return 
      */
-    public byte[] signData(byte[] data, PrivateKey priv) {
+    public byte[] signData(byte[] data, PrivateKey clauPrivada) {
         byte[] signature = null;
         try {
             Signature signer = Signature.getInstance("SHA1withRSA");
-            signer.initSign(priv); //Inicialitzem la firma digital a partir
+            signer.initSign(clauPrivada); //Inicialitzem la firma digital a partir
             signer.update(data); //Li assignem a l’objecte firma les dades a
             signature = signer.sign();
         } catch (Exception ex) {
@@ -87,8 +96,15 @@ public class Origen {
         return signature;
     }
 
+    /**
+     * Metode per a obtenir la clau privada.
+     * Li arriba el alias i la contrasenya.
+     * 
+     * @param alias
+     * @param contrasenya 
+     */
     public void obtindreClauPrivada(String alias, String contrasenya) {
-
+        
     }
 
     public void obtindreCertificatPub() {
