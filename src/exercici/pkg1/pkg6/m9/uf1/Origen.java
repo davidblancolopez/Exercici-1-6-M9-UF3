@@ -65,4 +65,16 @@ public class Origen {
         cifrador.init(Cipher.ENCRYPT_MODE, pub);
         
     }
+    
+    
+    public void obtindreClauPrivada(String alias, String contrasenya){
+        
+    }
+    
+    public void obtindreCertificatPub(){
+        
+    }
+
+
+
 }
