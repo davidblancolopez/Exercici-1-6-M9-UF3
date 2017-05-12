@@ -24,6 +24,7 @@ public class Exercici16M9UF1 {
         //Obtenim l'alias.
         Enumeration<String> aliases = almacen.aliases();
         
+        //Obtenim la clau privada.
         o.obtindreClauPrivada(aliases.nextElement(), "1423586709");
         
 //        KeyStore almacen = o.loadKeyStore("C:\\Users\\ALUMNEDAM\\Documents\\Exercici-1.6-M9-UF1\\src\\SSL\\origen.jks", "1423586709");
