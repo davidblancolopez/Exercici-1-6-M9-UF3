@@ -5,11 +5,13 @@ import java.io.FileInputStream;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.KeyStore;
+import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.Signature;
+import java.security.cert.X509Certificate;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -21,6 +23,7 @@ public class Origen {
     private byte[] missatgeEncriptat;
 
     private KeyStore magatzem;
+    private  X509Certificate certificate;
 
     public Origen() {
     }
@@ -107,8 +110,16 @@ public class Origen {
         
     }
 
-    public void obtindreCertificatPub() {
-
+    /**
+     * Metode que serveix per a introduir en la variable certificate el certificat
+     * que es troba en el magatzem de claus.
+     * Es pasa el alias i amb el metode getCertificate obtenim el certificat.
+     * 
+     * @param alias
+     * @throws KeyStoreException 
+     */
+    public void obtindreCertificatPub(String alias) throws KeyStoreException {
+       certificate = (X509Certificate) magatzem.getCertificate(alias);
     }
 
 }

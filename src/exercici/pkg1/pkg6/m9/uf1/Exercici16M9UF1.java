@@ -21,10 +21,10 @@ public class Exercici16M9UF1 {
         //Recuperem el magatzem de claus.
         KeyStore almacen = o.getMagatzem();
         
+        //Obtenim l'alias.
         Enumeration<String> aliases = almacen.aliases();
-        while (aliases.hasMoreElements()) {
-            System.out.println(aliases.nextElement());
-        }
+        
+        o.obtindreClauPrivada(aliases.nextElement(), "1423586709");
         
 //        KeyStore almacen = o.loadKeyStore("C:\\Users\\ALUMNEDAM\\Documents\\Exercici-1.6-M9-UF1\\src\\SSL\\origen.jks", "1423586709");
 //        Enumeration<String> aliases = almacen.aliases();
