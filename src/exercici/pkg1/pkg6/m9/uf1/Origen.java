@@ -17,6 +17,8 @@ public class Origen {
 
     String texto;
     private byte [] missatgeEncriptat;
+    
+    private KeyStore magatzem;
 
     public Origen() {
     }
@@ -31,14 +33,14 @@ public class Origen {
      * @return
      * @throws Exception 
      */
-    public KeyStore loadKeyStore(String ksFile, String ksPwd) throws Exception {
+    public void loadKeyStore(String ksFile, String ksPwd) throws Exception {
         KeyStore ks = KeyStore.getInstance("JCEKS"); // JCEKS ó JKS
         File f = new File(ksFile);
         if (f.isFile()) {
             FileInputStream in = new FileInputStream(f);
             ks.load(in, ksPwd.toCharArray());
         }
-        return ks;
+        magatzem = ks;
     }
     
     /**
