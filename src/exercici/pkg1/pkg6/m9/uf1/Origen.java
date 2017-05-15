@@ -11,6 +11,7 @@ import java.security.NoSuchProviderException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.Signature;
+import java.security.UnrecoverableKeyException;
 import java.security.cert.X509Certificate;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -24,6 +25,8 @@ public class Origen {
 
     private KeyStore magatzem;
     private  X509Certificate certificate;
+    PrivateKey clauPrivada;
+    
 
     public Origen() {
     }
@@ -106,8 +109,8 @@ public class Origen {
      * @param alias
      * @param contrasenya 
      */
-    public void obtindreClauPrivada(String alias, String contrasenya) {
-        
+    public void obtindreClauPrivada(String alias, String contrasenya) throws KeyStoreException, NoSuchAlgorithmException, UnrecoverableKeyException {
+        clauPrivada = (PrivateKey) magatzem.getKey("origen", "1423586709".toCharArray());
     }
 
     /**
