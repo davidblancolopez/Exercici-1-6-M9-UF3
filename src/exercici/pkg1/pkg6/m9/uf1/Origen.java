@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -24,9 +26,8 @@ public class Origen {
     private byte[] missatgeEncriptat;
 
     private KeyStore magatzem;
-    private  X509Certificate certificate;
+    private X509Certificate certificate;
     PrivateKey clauPrivada;
-    
 
     public Origen() {
     }
@@ -39,7 +40,6 @@ public class Origen {
         this.magatzem = magatzem;
     }
 
-    
     /**
      * Metode que retorna el magatzem de claus. Li arriba un string on s'indica
      * la ruta del arxiu .jks que es el magatzem, la contrasenya del magatzem de
@@ -83,11 +83,13 @@ public class Origen {
         missatgeEncriptat = cifrador.doFinal(data);
 
     }
+
     /**
      * Metode per a firmar.
+     *
      * @param data
      * @param clauPrivada
-     * @return 
+     * @return
      */
     public byte[] signData(byte[] data, PrivateKey clauPrivada) {
         byte[] signature = null;
@@ -103,26 +105,38 @@ public class Origen {
     }
 
     /**
-     * Metode per a obtenir la clau privada.
-     * Li arriba el alias i la contrasenya.
-     * 
-     * @param alias
-     * @param contrasenya 
+     * Metode per a generar les claus.
+     * @return
+     * @throws NoSuchAlgorithmException 
      */
-    public void obtindreClauPrivada(String alias, String contrasenya) throws KeyStoreException, NoSuchAlgorithmException, UnrecoverableKeyException {
-        clauPrivada = (PrivateKey) magatzem.getKey("origen", "1423586709".toCharArray());
+    public KeyPair generarClaus() throws NoSuchAlgorithmException {
+
+        KeyPairGenerator KeyGenerator = KeyPairGenerator.getInstance("RSA");
+        KeyGenerator.initialize(2048);
+        return KeyGenerator.genKeyPair();
     }
 
     /**
-     * Metode que serveix per a introduir en la variable certificate el certificat
-     * que es troba en el magatzem de claus.
-     * Es pasa el alias i amb el metode getCertificate obtenim el certificat.
-     * 
+     * Metode per a obtenir la clau privada. Li arriba el alias i la
+     * contrasenya.
+     *
      * @param alias
-     * @throws KeyStoreException 
+     * @param contrasenya
+     */
+    public PrivateKey obtindreClauPrivada(String alias, String contrasenya) throws KeyStoreException, NoSuchAlgorithmException, UnrecoverableKeyException {
+        return clauPrivada = (PrivateKey) magatzem.getKey("origen", "1423586709".toCharArray());
+    }
+
+    /**
+     * Metode que serveix per a introduir en la variable certificate el
+     * certificat que es troba en el magatzem de claus. Es pasa el alias i amb
+     * el metode getCertificate obtenim el certificat.
+     *
+     * @param alias
+     * @throws KeyStoreException
      */
     public void obtindreCertificatPub(String alias) throws KeyStoreException {
-       certificate = (X509Certificate) magatzem.getCertificate(alias);
+        certificate = (X509Certificate) magatzem.getCertificate(alias);
     }
 
 }

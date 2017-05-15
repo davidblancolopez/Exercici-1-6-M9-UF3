@@ -1,6 +1,7 @@
 package exercici.pkg1.pkg6.m9.uf1;
 
 import java.security.Key;
+import java.security.KeyPair;
 import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.PublicKey;
@@ -13,6 +14,7 @@ public class Exercici16M9UF1 {
     
     public static void main(String[] args) throws Exception {
         Origen o = new Origen();
+        Desti d = new Desti();
         
         
         //Fem que origen obtingui el magatzem de claus.
@@ -25,7 +27,13 @@ public class Exercici16M9UF1 {
         Enumeration<String> aliases = almacen.aliases();
         
         //Obtenim la clau privada.
-        o.obtindreClauPrivada(aliases.nextElement(), "1423586709");
+        PrivateKey clau = o.obtindreClauPrivada(aliases.nextElement(), "1423586709");
+        
+        KeyPair k = o.generarClaus();
+        
+        o.xifraDadesEmissor(text, k);
+        
+        d.desxifraDadesReceptor(data, clau);
         
 //        KeyStore almacen = o.loadKeyStore("C:\\Users\\ALUMNEDAM\\Documents\\Exercici-1.6-M9-UF1\\src\\SSL\\origen.jks", "1423586709");
 //        Enumeration<String> aliases = almacen.aliases();
