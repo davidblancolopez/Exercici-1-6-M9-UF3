@@ -1,7 +1,9 @@
 package exercici.pkg1.pkg6.m9.uf1;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.KeyPair;
@@ -14,6 +16,7 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.Signature;
 import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -23,7 +26,6 @@ import javax.crypto.NoSuchPaddingException;
 public class Origen {
 
     String texto;
-    private byte[] missatgeEncriptat;
 
     private KeyStore magatzem;
     private X509Certificate certificate;
@@ -53,8 +55,9 @@ public class Origen {
     public void CarregarMagatzemClaus(String ksFile, String ksPwd) throws Exception {
         KeyStore ks = KeyStore.getInstance("JCEKS"); // JCEKS ó JKS
         File f = new File(ksFile);
+        FileInputStream in = new FileInputStream(f);
         if (f.isFile()) {
-            FileInputStream in = new FileInputStream(f);
+
             ks.load(in, ksPwd.toCharArray());
         }
         magatzem = ks;
@@ -66,7 +69,7 @@ public class Origen {
      * xifrar la informació.
      *
      * @param missatge_text
-     * @param pub
+     * @param password
      * @throws IllegalBlockSizeException
      * @throws BadPaddingException
      * @throws InvalidKeyException
@@ -75,12 +78,18 @@ public class Origen {
      * @throws NoSuchPaddingException
      * @throws UnsupportedEncodingException
      */
-    public void xifraDadesEmissor(String missatge_text, PublicKey pub) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException, NoSuchAlgorithmException, NoSuchProviderException, NoSuchPaddingException, UnsupportedEncodingException {
+    public void xifraDadesEmissor(String missatge_text, String password) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException, NoSuchAlgorithmException, NoSuchProviderException, NoSuchPaddingException, UnsupportedEncodingException, IOException, CertificateException, KeyStoreException {
         byte[] data = missatge_text.getBytes("UTF-8");
 
-        Cipher cifrador = Cipher.getInstance("RSA/ECB/PKCS1Padding", "SunJCE");
-        cifrador.init(Cipher.ENCRYPT_MODE, pub);
-        missatgeEncriptat = cifrador.doFinal(data);
+        magatzem = KeyStore.getInstance("JCEKS");
+
+        FileInputStream fis = new FileInputStream(ficheroOrigen);
+
+        File f = new File(missatge_text);
+        if (f.isFile()) {
+
+            magatzem.load(fis, "123456".toCharArray());
+        }
 
     }
 
@@ -91,12 +100,22 @@ public class Origen {
      * @param clauPrivada
      * @return
      */
-    public byte[] signData(byte[] data, PrivateKey clauPrivada) {
+    public byte[] signData(String fitxer, PrivateKey clauPrivada) {
         byte[] signature = null;
+
+        byte[] buffer = new byte[1024];
+        int mida;
         try {
+            FileInputStream fis = new FileInputStream(fitxer);
+            BufferedInputStream bis = new BufferedInputStream(fis);
             Signature signer = Signature.getInstance("SHA1withRSA");
             signer.initSign(clauPrivada); //Inicialitzem la firma digital a partir
-            signer.update(data); //Li assignem a l’objecte firma les dades a
+
+            while (bis.available() != 0) {
+                mida = bis.read(buffer);
+                signer.update(buffer, 0, mida);
+            }
+            bis.close();
             signature = signer.sign();
         } catch (Exception ex) {
             System.err.println("Error signant les dades: " + ex);
@@ -104,39 +123,8 @@ public class Origen {
         return signature;
     }
 
-    /**
-     * Metode per a generar les claus.
-     * @return
-     * @throws NoSuchAlgorithmException 
-     */
-    public KeyPair generarClaus() throws NoSuchAlgorithmException {
-
-        KeyPairGenerator KeyGenerator = KeyPairGenerator.getInstance("RSA");
-        KeyGenerator.initialize(2048);
-        return KeyGenerator.genKeyPair();
-    }
-
-    /**
-     * Metode per a obtenir la clau privada. Li arriba el alias i la
-     * contrasenya.
-     *
-     * @param alias
-     * @param contrasenya
-     */
-    public PrivateKey obtindreClauPrivada(String alias, String contrasenya) throws KeyStoreException, NoSuchAlgorithmException, UnrecoverableKeyException {
-        return clauPrivada = (PrivateKey) magatzem.getKey("origen", "1423586709".toCharArray());
-    }
-
-    /**
-     * Metode que serveix per a introduir en la variable certificate el
-     * certificat que es troba en el magatzem de claus. Es pasa el alias i amb
-     * el metode getCertificate obtenim el certificat.
-     *
-     * @param alias
-     * @throws KeyStoreException
-     */
-    public void obtindreCertificatPub(String alias) throws KeyStoreException {
-        certificate = (X509Certificate) magatzem.getCertificate(alias);
+    KeyStore getKs() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
