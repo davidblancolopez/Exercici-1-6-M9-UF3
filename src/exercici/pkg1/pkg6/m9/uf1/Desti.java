@@ -15,28 +15,38 @@ import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.Enumeration;
 
-
 public class Desti {
 
-    public void descifrar() throws KeyStoreException, CertificateException, NoSuchAlgorithmException, InvalidKeyException, NoSuchProviderException, SignatureException, Exception{
-         
-            Origen o = new Origen();
-           
-            o.Xifrar(fitxerOr, "123456");
-            KeyStore ks = o.getMagatzem();
-            
-            Enumeration<String> aliases = ks.aliases();
-            
-            while (aliases.hasMoreElements()) {
-                System.out.println(aliases.nextElement());
-            }
-            
-            PrivateKey pkey = (PrivateKey) ks.getKey("origen", "1423586709".toCharArray());
-            
-            X509Certificate c = (X509Certificate) ks.getCertificate("desticert");
-            
-            System.out.println(c.getPublicKey());
-            c.verify(c.getPublicKey());
+    private byte[] missatgeXifrat;
+    private Key clauPrivada;
+
+    /**
+     * 
+     * @param ksFile
+     * @param ksPwd
+     * @return
+     * @throws Exception 
+     */
+    public KeyStore loadKeyStore(String ksFile, String ksPwd) throws Exception {
+        KeyStore ks = KeyStore.getInstance("JCEKS"); // JCEKS ó JKS
+        File f = new File(ksFile);
+        if (f.isFile()) {
+            FileInputStream in = new FileInputStream(f);
+            ks.load(in, ksPwd.toCharArray());
+        }
+        return ks;
     }
-    
+
+    /**
+     * 
+     * @param alias
+     * @param password
+     * @return
+     * @throws Exception 
+     */
+    public Key obtindreClauPrivada(String alias, String password) throws Exception {
+        clauPrivada = loadKeyStore(alias, password).getKey(alias, password.toCharArray());
+        return clauPrivada;
+    }
+
 }

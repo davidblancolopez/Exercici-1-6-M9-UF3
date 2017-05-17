@@ -13,6 +13,6 @@ public class Exercici16M9UF1 {
     static String fitxerOr = "C:\\Users\\ALUMNEDAM\\Documents\\Exercici-1.6-M9-UF1\\src\\SSL\\origen.jks";
         
     public static void main(String[] args) throws Exception {
- 
+        
     }
 }

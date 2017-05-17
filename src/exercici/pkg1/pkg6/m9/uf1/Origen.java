@@ -64,7 +64,7 @@ public class Origen {
 
 
     /**
-     * Metode per a firmar.
+     * Metode per a firmar la informació.
      *
      * @param data
      * @param clauPrivada
