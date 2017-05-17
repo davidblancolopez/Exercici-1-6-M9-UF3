@@ -10,8 +10,8 @@ import java.security.cert.X509Certificate;
 import java.util.Enumeration;
 
 public class Exercici16M9UF1 {
-    public String text = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa";
-    
+    static String fitxerOr = "C:\\Users\\ALUMNEDAM\\Documents\\Exercici-1.6-M9-UF1\\src\\SSL\\origen.jks";
+        
     public static void main(String[] args) throws Exception {
  
     }
