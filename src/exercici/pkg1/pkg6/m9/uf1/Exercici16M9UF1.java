@@ -14,10 +14,10 @@ public class Exercici16M9UF1 {
         
     public static void main(String[] args) throws Exception {
 
-        String certOrigen = "SSL" + File.separator + "origen.jks";
+        String certOrigen = "C:\\Users\\ALUMNEDAM\\Documents\\Exercici-1.6-M9-UF1\\src\\SSL\\origen.jks";
         Origen origen = new Origen(certOrigen, "1423586709");
-        String certDesti = "SSL" + File.separator + "desti.jks";
-        Desti desti = new Desti(certDesti, "1423586709");
+        String certDesti = "C:\\Users\\ALUMNEDAM\\Documents\\Exercici-1.6-M9-UF1\\src\\SSL\\desti.jks";
+        Desti desti = new Desti(certDesti, "123456");
 
         //S'encripta la informació.
         byte[] infoXifrada = origen.xifrar("1423586709");
